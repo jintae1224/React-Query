@@ -17,12 +17,16 @@ export function Posts() {
   const [selectedPost, setSelectedPost] = useState(null);
 
   // replace with useQuery
-  const { data } = useQuery(["posts"], fetchPosts);
+  const { data, error, isError, isLoading } = useQuery(["posts"], fetchPosts);
+
+  if (isLoading) return <h3>Loading...</h3>;
+
+  if (isError) return <h3>{error?.toString()}</h3>;
 
   return (
     <>
       <ul>
-        {data?.map((post) => (
+        {data.map((post) => (
           <li
             key={post.id}
             className="post-title"
